@@ -26,7 +26,7 @@
   - liblzo2-2
   notify: restart tinc
 
-- name: tinc VPN | dhcpcd (OpenVZ)
+- name: tinc VPN | dhcpcd 
   tags:
   - package
   apt:
