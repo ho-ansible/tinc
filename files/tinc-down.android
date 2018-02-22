@@ -17,5 +17,6 @@ if [ ! -z "$pid" -a -d "/proc/$pid" ]; then
   sleep 2
   [ -d "/proc/$pid" ] && kill "$pid"
 fi
+rm -f "$pidfile"
 
 ip link set $INTERFACE down

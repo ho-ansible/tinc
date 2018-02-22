@@ -12,6 +12,13 @@ nat="iptables -t nat"
 
 # Subroutines
 
+setIP() {
+  echo "Setting IP address $ip on $interface"
+  eval $(ipcalc -ns $ip/$mask) # set NETWORK
+  ip ad add $ip/$mask dev $interface
+  ip ro add $NETWORK dev $interface table $tid
+}
+
 clearRouting() {
   ip ru del pri $pri lookup $tid 2>&-
   ip ro flush table $tid
@@ -40,6 +47,8 @@ redirDNS() {
   $nat -I OUTPUT -j $chain
 }
 
+# Main actions
+
 [ -n "$1" ] || {
   echo "Error: should be called from udhcpc"
   exit 1
@@ -54,9 +63,8 @@ case "$1" in
   ;;
 
  bound)
-  echo "Setting IP address $ip on $interface"
-  ip ad add $ip/$mask dev $interface
-  ip ro add $broadcast/$mask dev $interface table $tid
+  echo "Binding interface $interface"
+  setIP
   setGateway $router
   redirDNS $dns
   ;;
