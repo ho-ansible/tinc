@@ -12,10 +12,10 @@ ip -6 ro flush table $tid
 # Release udhcpc lease
 pidfile=/data/local/udhcpc.pid
 [ -f "$pidfile" ] && pid=$(cat "$pidfile")
-If [ ! -z "$pid" -a -d "/proc/$pid" ]; then
+if [ ! -z "$pid" -a -d "/proc/$pid" ]; then
   kill -USR2 "$pid"
   sleep 2
   [ -d "/proc/$pid" ] && kill "$pid"
-}
+fi
 
 ip link set $INTERFACE down
