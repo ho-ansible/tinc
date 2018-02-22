@@ -57,9 +57,12 @@ case "$1" in
   echo "Setting IP address $ip on $interface"
   ip ad add $ip/$mask dev $interface
   ip ro add $broadcast/$mask dev $interface table $tid
+  setGateway $router
+  redirDNS $dns
+  ;;
 
  renew)
-  echo "Setting DHCP options for $interface"
+  echo "Renewing lease for $interface"
   setGateway $router
   redirDNS $dns
   ;;
