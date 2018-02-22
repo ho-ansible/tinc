@@ -1,0 +1,14 @@
+#! /system/bin/sh
+## create softlinks for all busybox modules
+
+bb=/data/magisk/busybox
+target=/sbin
+
+[ -x "$bb" ] || {
+  echo "$0: missing busybox $bb"
+  exit 1
+}
+
+for module in $("$bb" --list); do
+  ln -s "$bb" "$target/$module"
+done
