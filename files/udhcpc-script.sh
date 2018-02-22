@@ -4,48 +4,32 @@
 ## https://udhcp.busybox.net/README.udhcpc
 ## key vars: interface ip subnet mask broadcast router dns domain
 
-pri=4000
-tid=200
+# Set vars
+pri=5500
+tid=150
+chain="out_dns"
+nat="iptables -t nat"
 
-[ -n "$1" ] || {
-  echo "Error: should be called from udhcpc"
-  exit 1
+# Subroutines
+
+clearRouting() {
+  ip ru del pri $pri lookup $tid 2>&-
+  ip ro flush table $tid
 }
 
-case "$1" in
- deconfig)
-  echo "Deconfiguring interface: $interface"
-  ip link set $interface up
-  ip ru del pri $pri lookup $tidy
-  ip ro flush table $tid
-  iptables -t nat -D OUTPUT -j out_dns 2>&-
-  ;;
+setGateway() {
+  echo "Setting default gateway to $1"
+  ip ru add pri $pri lookup $tid
+  ip ro add default via $1 dev $interface table $tid
+}
 
- bound)
-  echo "Setting IP address $ip on $interface"
-  ip ad add $ip/$mask dev $interface
+clearDNS() {
+  $nat -D OUTPUT -j $chain 2>&-
+}
 
-	renew)
-		echo "DHCP lease renewed for $interface"
-
-		if [ -n "$router" ] ; then
-			echo "Deleting routers"
-			while route del default gw 0.0.0.0 dev $interface ; do
-				:
-			done
-
-			metric=0
-			for i in $router ; do
-				echo "Adding router $i"
-				route add default gw $i dev $interface metric $((metric++))
-			done
-		fi
-
-redirectDNS() {
+redirDNS() {
   echo "Redirecting DNS traffic to $1"
 
-  chain="out_dns"
-  nat="iptables -t nat"
   rule="--dport 53 -j DNAT --to $1"
 
   $nat -N $chain 2>&-
@@ -56,7 +40,29 @@ redirectDNS() {
   $nat -I OUTPUT -j $chain
 }
 
-		;;
+[ -n "$1" ] || {
+  echo "Error: should be called from udhcpc"
+  exit 1
+}
+
+case "$1" in
+ deconfig)
+  echo "Deconfiguring interface: $interface"
+  ip link set $interface up
+  clearDNS
+  clearRouting
+  ;;
+
+ bound)
+  echo "Setting IP address $ip on $interface"
+  ip ad add $ip/$mask dev $interface
+  ip ro add $broadcast/$mask dev $interface table $tid
+
+ renew)
+  echo "Setting DHCP options for $interface"
+  setGateway $router
+  redirDNS $dns
+  ;;
 esac
 
 exit 0
