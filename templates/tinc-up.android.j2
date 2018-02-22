@@ -65,26 +65,6 @@ getip() {
 
 saveroute $(vpnhosts | vpnaddr | getip | sort -u) || true
 
-echo "Enabling default gateway via VPN"
-ip ru add pri 18600 lookup main
-
-redirectDNS() {
-  echo "Redirecting DNS traffic to $1"
-
-  chain="out_dns"
-  nat="iptables -t nat"
-  rule="--dport 53 -j DNAT --to $1"
-
-  $nat -N $chain 2>&-
-  $nat -F $chain
-  $nat -A $chain -p udp $rule
-  $nat -A $chain -p tcp $rule
-  $nat -C OUTPUT -j $chain 2>&- || \
-  $nat -I OUTPUT -j $chain
-}
-
-#redirectDNS 10.100.1.1
-
 echo "Starting DHCP client on $INTERFACE"
 udhcpc -Rb -i $INTERFACE -x hostname:$NAME \
   -s /data/local/udhcpc-script.sh \
