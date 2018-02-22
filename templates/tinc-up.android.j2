@@ -1,55 +1,69 @@
 #! /system/bin/sh
-# cloud://data/Files/tinc/tinc-up
-# Link configuration once VPN is up
-# + dhcpcd adds default route to "main" table
-# + but in "ip rule", main table has lowest priority
 
 ip link set $INTERFACE up
 
 tincdir="/sdcard/Android/tinc"
 
+# Persistent MAC address
+MACfile="$tincdir/mac"
+MAC=$(cat "$MACfile" 2>&-)
+if [ -z "$MAC" ]; then
+  cat /sys/class/net/$INTERFACE/address > "$MACfile"
+else
+  ip link set $INTERFACE address $MAC
+fi
+
+# Save static routes to VPN servers
+
 tid=100
+pri=5000
 
 initRouting() {
-  priority=18500
-  ip ru del pri $priority 2>&-
-  ip ru add pri $priority from all lookup $tid
+  ip ru del pri $pri 2>&-
+  ip ru add pri $pri from all lookup $tid
   ip ro flush table $tid
   ip -6 ro flush table $tid
 }
 initRouting
 
-gethost() {
-  nslookup $1 | awk '/^Address/ {i++} i>1 {print $3}'
-}
-
 getroute() {
   rt=$(ip ro get $1 | head -n 1)
-  case "$rt" in
-    (*error*) echo "$rt";;
-    (*) rt="${rt#$1}"; echo "${rt%uid*}";;
-  esac
+  echo "${rt#$1}"
 }
 
 saveroute() {
-  for node in $@; do
-    for ip in $(gethost $node); do
-      old_rt=$(getroute $ip)
-      case "$old_rt" in
-        (*error*) echo "No route: $old_rt";;
-        (*unreachable*) echo "No route: $old_rt";;
-        (*) echo "Static route: $ip $old_rt"
-          ip ro add table $tid $ip $old_rt;;
-      esac
-    done
+  for ip in $@; do
+    old_rt=$(getroute $ip)
+    case "$old_rt" in
+      (*error*) echo "No route: $old_rt";;
+      (*unreachable*) echo "No route: $old_rt";;
+      (*) echo "Static route: $ip $old_rt"
+        ip ro add table $tid $ip $old_rt;;
+    esac
   done
 }
 
 vpnhosts() {
-  grep 'Address =' $tincdir/hosts/* | awk '{print $3}' | sort -u
+  grep 'ConnectTo =' "$tincdir/tinc.conf" | awk '{print $3}' 
 }
 
-saveroute $(vpnhosts)
+vpnaddr() {
+  while read host; do
+    grep 'Address =' "$tincdir/hosts/$host" | awk '{print $3}' 
+  done
+}
+
+getip() {
+  while read host; do
+    if [ $( echo "$host" | tr -d '[0-9a-f.:]' ) ]; then
+      host -t a $host | awk '/has address/ {i++} i>0 {print $4}'
+    else
+      echo "$host"
+    fi
+  done
+}
+
+saveroute $(vpnhosts | vpnaddr | getip | sort -u) || true
 
 echo "Enabling default gateway via VPN"
 ip ru add pri 18600 lookup main
@@ -69,7 +83,7 @@ redirectDNS() {
   $nat -I OUTPUT -j $chain
 }
 
-redirectDNS {{ tinc_subnet }}.1
+#redirectDNS 10.100.1.1
 
 echo "Starting DHCP client on $INTERFACE"
 udhcpc -Rb -i $INTERFACE -x hostname:$NAME \
