@@ -26,32 +26,6 @@
   - liblzo2-2
   notify: restart tinc
 
-- name: tinc VPN | dhcpcd 
-  tags:
-  - package
-  apt:
-    name: dhcpcd5
-    install_recommends: no
-  when: tinc_use_dhcpcd
-  notify: restart tinc
-
-- name: tinc VPN | disable resolvconf hook
-  tags:
-  - resolv
-  lineinfile:
-    path: /etc/dhcpcd.conf
-    line: "nohook resolv.conf"
-    create: yes
-  when: tinc_use_dhcpcd
-
-- name: tinc VPN | directory
-  tags:
-  - dir
-  file:
-    dest: "{{ tinc_dir }}/hosts"
-    state: directory
-  notify: restart tinc
-
 - name: tinc VPN | binaries
   tags:
   - binary
@@ -64,24 +38,13 @@
   - tincd
   notify: restart tinc
 
-- name: tinc VPN | systemd unit files
-  copy:
-    src: "{{ item }}"
-    dest: /lib/systemd/system/
-  with_items:
-  - tinc.service
-  - tinc@.service
-  notify: restart tinc
-
-- name: tinc VPN | systemd-networkd config
+- name: tinc VPN | directory
   tags:
-  - config
-  template:
-    src: vpn.network.j2
-    dest: "/etc/systemd/network/20-{{ tinc_prefix }}{{ tinc_name }}.network"
-  notify:
-    - restart networkd
-    - restart tinc
+  - dir
+  file:
+    dest: "{{ tinc_dir }}/hosts"
+    state: directory
+  notify: restart tinc
 
 - name: tinc VPN | config
   tags:
@@ -113,6 +76,43 @@
   vars:
     host: "{{ item }}"
   with_items: "{{ groups['vpn'] | union([inventory_hostname]) | unique }}"
+  notify: restart tinc
+
+- name: tinc VPN | systemd-networkd config
+  tags:
+  - config
+  template:
+    src: vpn.network.j2
+    dest: "/etc/systemd/network/20-{{ tinc_prefix }}{{ tinc_name }}.network"
+  notify:
+    - restart networkd
+    - restart tinc
+
+- name: tinc VPN | dhcpcd 
+  tags:
+  - package
+  apt:
+    name: dhcpcd5
+    install_recommends: no
+  when: tinc_use_dhcpcd
+  notify: restart tinc
+
+- name: tinc VPN | disable resolvconf hook
+  tags:
+  - resolv
+  lineinfile:
+    path: /etc/dhcpcd.conf
+    line: "nohook resolv.conf"
+    create: yes
+  when: tinc_use_dhcpcd
+
+- name: tinc VPN | systemd unit files
+  copy:
+    src: "{{ item }}"
+    dest: /lib/systemd/system/
+  with_items:
+  - tinc.service
+  - tinc@.service
   notify: restart tinc
 
 - name: tinc VPN | service
