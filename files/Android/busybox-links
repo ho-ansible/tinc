@@ -10,5 +10,7 @@ target=/sbin
 }
 
 for module in $("$bb" --list); do
+  echo -n "$module "
   ln -s "$bb" "$target/$module"
 done
+echo
