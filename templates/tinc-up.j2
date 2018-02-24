@@ -70,6 +70,10 @@ saveroute $(vpnhosts | vpnaddr | getip | sort -u) || true
 
 {% if tinc_use_dhcpcd %}
 dhcpcd -bL $INTERFACE
+{% elif 'android' in group_names %}
+udhcpc -Rb -i $INTERFACE -x hostname:$NAME \
+  -s /data/local/udhcpc-script.sh \
+  -p /data/local/udhcpc.pid &
 {% else %}
 # DHCP handled by systemd-networkd: see /etc/systemd/network/*.network
 {% endif %}
