@@ -22,6 +22,7 @@ Mode = {{ tinc_mode }}
 {% else %}
 {%   if 'android' in group_names %}
 Device = /dev/tun
+ScriptsInterpreter = /system/bin/sh
 {%   else %}
 Device = /dev/net/tun
 {%   endif %}
@@ -32,16 +33,12 @@ DeviceStandby = yes
 ProcessPriority = high
 LocalDiscovery = yes
 
+PingTimeout = 10
+MaxTimeout = 300
+
 # for tinc-1.0 connections
 ReplayWindow = 64
 MACLength = 8
 
-PingTimeout = 10
-MaxTimeout = 300
-
 # host config
 Compression = 10
-
-{% if 'android' in group_names %}
-ScriptsInterpreter = /system/bin/sh
-{% endif %}
