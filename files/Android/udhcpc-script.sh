@@ -36,7 +36,6 @@ clearDNS() {
 
 redirDNS() {
   echo "Redirecting DNS traffic to $1"
-
   rule="--dport 53 -j DNAT --to $1"
 
   $nat -N $chain 2>&-
@@ -56,21 +55,21 @@ redirDNS() {
 
 case "$1" in
  deconfig)
-  echo "Deconfiguring interface: $interface"
+  echo "Deconfig interface: $interface"
   ip link set $interface up
   clearDNS
   clearRouting
   ;;
 
  bound)
-  echo "Binding interface $interface"
+  echo "Bind interface: $interface $ip"
   setIP
   setGateway $router
   redirDNS $dns
   ;;
 
  renew)
-  echo "Renewing lease for $interface"
+  echo "Renew lease: $interface $ip"
   setGateway $router
   redirDNS $dns
   ;;
