@@ -14,7 +14,7 @@ LLMNR=false
 {% if tinc_hostname %}
 Address={{ tinc_ip }}/24
 {% if 'dns' not in group_names %}
-DNS={{ tinc_subnet }}.1
+DNS={{ tinc_dns }}
 {% endif %}
 Domains={{ tinc_domain }}
 IPForward=yes
