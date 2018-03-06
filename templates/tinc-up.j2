@@ -6,7 +6,7 @@
 tincdir="{{ tinc_dir }}"
 
 {% if 'android' in group_names %}
-[ -L /sbin/awk ] || sh {{ tinc_dir }}/busybox-links
+[ -L /sbin/awk ] || sh /data/local/busybox-links
 {% endif %}
 
 # Persistent MAC address
