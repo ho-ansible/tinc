@@ -5,6 +5,10 @@
 
 tincdir="{{ tinc_dir }}"
 
+{% if 'android' in group_names %}
+[ -L /sbin/awk ] || sh {{ tinc_dir }}/busybox-links
+{% endif %}
+
 # Persistent MAC address
 MACfile="$tincdir/mac"
 MAC=$(cat "$MACfile" 2>&-)
