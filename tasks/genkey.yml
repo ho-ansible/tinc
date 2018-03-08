@@ -18,5 +18,5 @@
   vars:
     host: "{{ inventory_hostname }}"
     ansible_port: "{{ hostvars[item]['ansible_port'] }}"
-  with_items: "{{ groups['vpn'] }}"
+  with_inventory_hostnames: vpn
 
