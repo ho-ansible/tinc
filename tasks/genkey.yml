@@ -14,9 +14,11 @@
 
 - name: tinc genkey | push host public key to VPN servers
   include_tasks: hostconf.yml
-  delegate_to: "{{ item }}"
+  delegate_to: "{{ target }}"
   vars:
-    host: "{{ inventory_hostname }}"
-    ansible_port: "{{ hostvars[item]['ansible_port'] }}"
+    item: "{{ inventory_hostname }}"
+    ansible_port: "{{ hostvars[target]['ansible_port'] }}"
   with_inventory_hostnames: vpn
+  loop_control:
+    loop_var: target
 
