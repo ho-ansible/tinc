@@ -14,5 +14,5 @@
 - include_tasks: hostconf.yml
   vars:
     host: "{{ item }}"
-  with_items: "{{ groups['all'] | difference(groups['vpn']) }}"
+  with_inventory_hostnames: all:!vpn
   when: "'vpn' in group_names"

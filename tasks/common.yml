@@ -75,7 +75,7 @@
 - include_tasks: hostconf.yml
   vars:
     host: "{{ item }}"
-  with_items: "{{ groups['vpn'] | union([inventory_hostname]) | unique }}"
+  with_inventory_hostnames: "vpn:{{ inventory_hostname }}"
   notify: restart tinc
 
 - name: tinc VPN | systemd-networkd config
