@@ -5,21 +5,16 @@
 
 Port = {{ tinc_port }}
 
-{% if tinc_hostname %}
-Name = {{ tinc_hostname }}
-{% else %}
-Name = {{ inventory_hostname }}
-{% endif %}
+Name = {{ tinc_hostname | default(inventory_hostname) }}
 
-{% for host in tinc_connect %}
+{% for host in tinc_connect | default() %}
 ConnectTo = {{ host }}
 {% endfor %}
 AutoConnect = yes
 
 Mode = {{ tinc_mode }}
 
-{% if 'win' in group_names %}
-{% else %}
+{% if 'win' not in group_names %}
 {%   if 'android' in group_names %}
 Device = /dev/tun
 ScriptsInterpreter = /system/bin/sh
