@@ -11,8 +11,10 @@ LinkLocalAddressing=no
 IPv6AcceptRA=no
 LLMNR=false
 
-{% if tinc_hostname %}
+{% if tinc_ip %}
 Address={{ tinc_ip }}/24
+{% endif %}
+{% if 'vpn' in group_names %}
 {% if 'dns' not in group_names %}
 DNS={{ tinc_dns }}
 {% endif %}
