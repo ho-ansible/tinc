@@ -10,7 +10,7 @@ Ansible role to configure tinc VPN
 + `tinc_mode`: switch or router
 + `tinc_domain`: 
 + `tinc_ip`: static IP (optional)
-+ `tinc_hostname`: name in tinc, if different from `inventory_hostname`
++ `tinc_nodename`: name in tinc, if different from `inventory_hostname`
 
 ## Playbook for all networks
 ```

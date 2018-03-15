@@ -6,7 +6,7 @@
     - crypt
   template:
     src: host.j2
-    dest: "{{ tinc_dir }}/hosts/{{ hostvars[item]['tinc_hostname'] | default(item) }}"
+    dest: "{{ tinc_dir }}/hosts/{{ hostvars[item]['tinc_nodename'] | default(item) }}"
     mode: 0640
   vars:
     tinc_addresses: "{{ hostvars[item]['tinc_addresses'] | default([]) }}"

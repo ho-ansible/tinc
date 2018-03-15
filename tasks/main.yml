@@ -7,7 +7,7 @@
   register: keydir
 
 - include_tasks: genkey.yml
-  when: "not keydir.stat.exists and not tinc_hostname"
+  when: "not keydir.stat.exists"
 
 - import_tasks: common.yml
 

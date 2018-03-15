@@ -8,7 +8,7 @@ tinc_port: 655
 tinc_mode: switch
 tinc_connect:
   - vpn1
-tinc_hostname: ""
+tinc_nodename: ""
 tinc_dns: 192.168.2.1
 
 # inventory group for all nodes in this network
