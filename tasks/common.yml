@@ -73,7 +73,7 @@
   notify: restart tinc
 
 - include_tasks: hostconf.yml
-  with_inventory_hostnames: "vpn:{{ inventory_hostname }}"
+  with_inventory_hostnames: "{{ inventory_hostname }}:{{ tinc_server_group }}"
   notify: restart tinc
 
 - name: tinc VPN | systemd-networkd config

@@ -11,8 +11,10 @@ tinc_connect:
 tinc_hostname: ""
 tinc_dns: 192.168.2.1
 
-# inventory group of all nodes in this network
+# inventory group for all nodes in this network
 tinc_node_group: tinc
+# inventory group for VPN servers
+tinc_server_group: tinc_server
 
 tinc_prefix: tinc_
 tinc_dir: "/etc/tinc/{{ tinc_prefix ~ tinc_name }}"
