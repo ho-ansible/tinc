@@ -2,13 +2,12 @@
 tinc_version: "1.1pre15"
 tinc_name: vpn
 tinc_domain: "{{ tinc_name }}.vpn"
-tinc_ip: 192.168.2.1
+tinc_ip: 
 tinc_subnet: 192.168.2
 tinc_port: 655
 tinc_mode: switch
-tinc_connect:
-  - vpn1
-tinc_nodename: ""
+tinc_connect: []
+tinc_nodename:
 tinc_dns: 192.168.2.1
 
 # inventory group for all nodes in this network
