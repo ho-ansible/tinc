@@ -11,8 +11,7 @@ repo="/sdcard/Android/git/tinc/files/Android"
 [ -L /sbin/awk ] || sh "$repo/busybox-links"
 
 uhook="/data/local/udhcpc-script.sh"
-[ -f "$uhook" ] || install -o root -g root -m 755 \
-  "$repo/${uhook##*/}" "$uhook"
+install -o root -g root -m 755 "$repo/${uhook##*/}" "$uhook"
 {% endif %}
 
 # Persistent MAC address
