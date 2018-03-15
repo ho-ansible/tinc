@@ -7,7 +7,7 @@
   register: keydir
 
 - include_tasks: genkey.yml
-  when: "not keydir.stat.exists and not 'vpn' in group_names"
+  when: "not keydir.stat.exists and not tinc_hostname"
 
 - import_tasks: common.yml
 
