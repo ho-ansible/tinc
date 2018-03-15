@@ -11,7 +11,7 @@ LinkLocalAddressing=no
 IPv6AcceptRA=no
 LLMNR=false
 
-{% if tinc_ip %}
+{% if tinc_ip | search(tinc_subnet) %}
 Address={{ tinc_ip }}/24
 {% endif %}
 
