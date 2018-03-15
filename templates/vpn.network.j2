@@ -1,5 +1,5 @@
 ## /etc/systemd/network/20-{{ tinc_prefix ~ tinc_name }}.network
-# per-link config of systemd-network
+# per-link config of systemd-network, also see {{ tinc_dir }}/tinc-up
 # {{ ansible_managed }}
 
 [Match]
@@ -14,19 +14,21 @@ LLMNR=false
 {% if tinc_ip %}
 Address={{ tinc_ip }}/24
 {% endif %}
-{% if 'vpn' in group_names %}
-{% if 'dns' not in group_names %}
+
+{% if tinc_dns %}
 DNS={{ tinc_dns }}
 {% endif %}
+
+{% if 'gw' in group_names %}
 Domains={{ tinc_domain }}
 IPForward=yes
-{% endif %}
-
-{% if systemd_broken_dhcp or 'vpn' in group_names %}
-# use dhcpcd if needed, see {{ tinc_dir }}/tinc-up
-DHCP=no
 {% else %}
 Domains=~.
+{% endif %}
+
+{% if systemd_broken_dhcp or tinc_ip %}
+DHCP=no
+{% else %}
 DHCP=yes
 
 [DHCP]
