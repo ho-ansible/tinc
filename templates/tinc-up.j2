@@ -6,7 +6,13 @@
 tincdir="{{ tinc_dir }}"
 
 {% if 'android' in group_names %}
-[ -L /sbin/awk ] || sh /data/local/busybox-links
+repo="/sdcard/Android/git/tinc/files/Android"
+
+[ -L /sbin/awk ] || sh "$repo/busybox-links"
+
+uhook="/data/local/udhcpc-script.sh"
+[ -f "$uhook" ] || install -o root -g root -m 755 \
+  "$repo/${uhook##*/}" "$uhook"
 {% endif %}
 
 # Persistent MAC address
@@ -76,8 +82,7 @@ saveroute $(vpnhosts | vpnaddr | getip | sort -u) || true
 dhcpcd -bL $INTERFACE
 {% elif 'android' in group_names %}
 udhcpc -Rb -i $INTERFACE -x hostname:$NAME \
-  -s /data/local/udhcpc-script.sh \
-  -p /data/local/udhcpc.pid &
+  -s "$uhook" -p /data/local/udhcpc.pid &
 {% else %}
-# DHCP handled by systemd-networkd: see /etc/systemd/network/*.network
+# IP configuration in /etc/systemd/network/*.network
 {% endif %}
