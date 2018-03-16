@@ -1,6 +1,6 @@
 ---
 # https://bugs.freedesktop.org/show_bug.cgi?id=84373
 systemd_broken_dhcp: "{{ ansible_kernel | version_compare('3.7', '<') }}"
-tinc_use_dhcpcd: "{{ systemd_broken_dhcp and 'vpn' not in group_names }}"
+tinc_use_dhcpcd: "{{ systemd_broken_dhcp and tinc_server_group not in group_names }}"
 
 vpn_ip: "{{ vars['ansible_' ~ tinc_prefix ~ tinc_name]['ipv4']['address'] }}"
