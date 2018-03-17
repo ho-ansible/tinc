@@ -15,10 +15,6 @@ LLMNR=false
 Address={{ tinc_ip }}/24
 {% endif %}
 
-{% if tinc_dns %}
-DNS={{ tinc_dns }}
-{% endif %}
-
 {% if 'gw' in group_names %}
 Domains={{ tinc_domain }}
 IPForward=yes
@@ -27,6 +23,10 @@ Domains=~.
 {% endif %}
 
 {% if systemd_broken_dhcp or tinc_ip | search(tinc_subnet) %}
+{%   if tinc_dns %}
+DNS={{ tinc_dns }}
+{%   endif %}
+
 DHCP=no
 {% else %}
 DHCP=yes
