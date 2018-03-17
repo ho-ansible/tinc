@@ -5,9 +5,9 @@
 
 Port = {{ tinc_port }}
 
-Name = {{ tinc_nodename | default(inventory_hostname) }}
+Name = {{ tinc_nodename | d(inventory_hostname, true) }}
 
-{% for host in tinc_connect | default() %}
+{% for host in tinc_connect | d() %}
 ConnectTo = {{ host }}
 {% endfor %}
 AutoConnect = yes
