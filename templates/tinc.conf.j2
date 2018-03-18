@@ -7,8 +7,8 @@ Port = {{ tinc_port }}
 
 Name = {{ tinc_nodename | d(inventory_hostname, true) }}
 
-{% for host in tinc_connect | d() %}
-ConnectTo = {{ host }}
+{% for host in groups[tinc_server_group] %}
+ConnectTo = {{ hostvars[host].tinc_nodename | d(host, true) }}
 {% endfor %}
 AutoConnect = yes
 

@@ -6,7 +6,6 @@ tinc_ip:
 tinc_subnet: 192.168.2
 tinc_port: 655
 tinc_mode: switch
-tinc_connect: []
 tinc_nodename:
 tinc_dns: 
 
