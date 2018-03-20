@@ -1,11 +1,15 @@
 ---
 tinc_version: "1.1pre15"
+
+# network name
 tinc_name: vpn
 tinc_domain: "{{ tinc_name }}.vpn"
-tinc_ip: 
 tinc_subnet: 192.168.2
 tinc_port: 655
 tinc_mode: switch
+
+# static IP (optional for switched)
+tinc_ip: 
 tinc_nodename:
 tinc_dns: 
 
@@ -20,6 +24,7 @@ tinc_dir: "/etc/tinc/{{ tinc_prefix ~ tinc_name }}"
 tinc_keystore: "{{ inventory_dir }}/.tinc/keys"
 tinc_keydir: "{{ tinc_keystore }}/{{ inventory_hostname }}"
 
+# node config
 tinc_addresses: []
 tinc_subnets: []
 tinc_ed25519: ""
