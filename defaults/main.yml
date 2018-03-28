@@ -1,26 +1,28 @@
 ---
 tinc_version: "1.1pre15"
+
+# Network-wide config:
 tinc_name: vpn
 tinc_domain: "{{ tinc_name }}.vpn"
-tinc_ip: 
 tinc_subnet: 192.168.2
-tinc_port: 655
 tinc_mode: switch
-tinc_nodename:
 tinc_dns: 
 
-# inventory group for all nodes in this network
-tinc_node_group: tinc
-# inventory group for VPN servers
+tinc_node_group: tinc 
 tinc_server_group: tinc_server
 
 tinc_prefix: tinc_
 tinc_dir: "/etc/tinc/{{ tinc_prefix ~ tinc_name }}"
 
-tinc_keystore: "{{ inventory_dir }}/.tinc/keys"
-tinc_keydir: "{{ tinc_keystore }}/{{ inventory_hostname }}"
-
+# Host-specific config:
+tinc_port: 655
+tinc_ip: 
+tinc_nodename:
 tinc_addresses: []
 tinc_subnets: []
 tinc_ed25519: ""
 tinc_rsa: ""
+
+tinc_keystore: "{{ inventory_dir }}/.tinc/keys"
+tinc_keydir: "{{ tinc_keystore }}/{{ inventory_hostname }}"
+
