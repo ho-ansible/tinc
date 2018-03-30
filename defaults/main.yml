@@ -1,5 +1,4 @@
 ---
-tinc_version: "1.1pre15"
 
 # Override most vars by appending network name
 # e.g., tinc_dns_MYNET overrides tinc_dns for the MYNET tinc network
