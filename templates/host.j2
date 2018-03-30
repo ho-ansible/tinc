@@ -1,11 +1,11 @@
 # Tinc host config
 # {{ ansible_managed }}
 
-{% for addr in tinc_addresses | d("") %}
+{% for addr in tinc_addresses %}
 Address = {{ addr }}
 {% endfor %}
 
-{% for subnet in tinc_subnets | d("") %}
+{% for subnet in tinc_subnets %}
 Subnet = {{ subnet }}
 {% endfor %}
 
