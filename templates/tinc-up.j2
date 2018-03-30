@@ -3,7 +3,7 @@
 # {{ansible_managed}}
 # Link configuration once tun/tap interface is created
 
-tincdir="{{ tinc_dir }}"
+tincdir=$(dirname $0)
 
 {% if 'android' in group_names %}
 repo="/sdcard/Android/git/tinc/files/Android"
