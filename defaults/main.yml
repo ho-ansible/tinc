@@ -20,8 +20,6 @@ tinc_ip:
 tinc_nodename:
 tinc_addresses: []
 tinc_subnets: []
-tinc_ed25519: ""
-tinc_rsa: ""
 
 tinc_keystore: "{{ inventory_dir }}/.tinc/keys"
 tinc_keydir: "{{ tinc_keystore }}/{{ inventory_hostname }}"
