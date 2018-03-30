@@ -6,3 +6,17 @@ systemd_broken_dhcp: "{{ ansible_kernel | version_compare('3.7', '<') }}"
 tinc_has_ip: "{{ tinc_ip | search(tinc_subnet) }}"
 tinc_use_dhcpcd: "{{ systemd_broken_dhcp and not tinc_has_ip }}"
 
+# Network-specific overrides
+tinc__domain: "{{ vars['tinc_domain_' ~ tinc_network] | d(tinc_domain) }}"
+tinc__subnet: "{{ vars['tinc_subnet_' ~ tinc_network] | d(tinc_subnet) }}"
+tinc__mode: "{{ vars['tinc_mode_' ~ tinc_network] | d(tinc_mode) }}"
+tinc__dns: "{{ vars['tinc_dns_' ~ tinc_network] | d(tinc_dns) }}"
+
+tinc__node_group: "{{ vars['tinc_node_group_' ~ tinc_network] | d(tinc_node_group) }}" 
+tinc__server_group: "{{ vars['tinc_server_group_' ~ tinc_network] | d(tinc_server_group) }}"
+
+tinc__port: "{{ vars['tinc_port_' ~ tinc_network] | d(tinc_port) }}"
+tinc__ip: "{{ vars['tinc_ip_' ~ tinc_network] | d(tinc_ip) }}"
+tinc__name: "{{ vars['tinc_name_' ~ tinc_network] | d(tinc_name) }}"
+tinc__addresses: "{{ vars['tinc_addresses_' ~ tinc_network] | d(tinc_addresses) }}"
+tinc__subnets: "{{ vars['tinc_subnets_' ~ tinc_network] | d(tinc_subnets) }}"
