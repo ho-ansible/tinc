@@ -1,27 +1,28 @@
 ---
 
+tinc_network: vpn
+
 # Override most vars by appending network name
 # e.g., tinc_dns_MYNET overrides tinc_dns for the MYNET tinc network
 
-# Network-wide config:
-tinc_network: vpn
+# per network:
 tinc_domain: "{{ tinc_network }}.vpn"
 tinc_subnet: 192.168.2
 tinc_mode: switch
 tinc_dns: 
-
 tinc_node_group: tinc 
 tinc_server_group: tinc_server
 
-tinc_prefix: tinc_
-tinc_dir: "/etc/tinc/{{ tinc_prefix ~ tinc_network }}"
-
-# Host-specific config:
+# per host + per network:
 tinc_port: 655
 tinc_ip: 
 tinc_name:
 tinc_addresses: []
 tinc_subnets: []
+
+# Directories, local and remote:
+tinc_prefix: tinc_
+tinc_dir: "/etc/tinc/{{ tinc_prefix ~ tinc_network }}"
 
 tinc_keystore: "{{ inventory_dir }}/.tinc/keys"
 tinc_keydir: "{{ tinc_keystore }}/{{ inventory_hostname }}"
