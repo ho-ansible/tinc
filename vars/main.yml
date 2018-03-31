@@ -1,22 +1,23 @@
 ---
 tinc_version: "1.1pre15"
 
+# Network-specific config
+tinc_cur_subnet   : "{{ vars['tinc_subnet_'    ~ tinc_network] | d(tinc_subnet   , true) }}"
+tinc_cur_domain   : "{{ vars['tinc_domain_'    ~ tinc_network] | d(tinc_domain   , true) }}"
+tinc_cur_mode     : "{{ vars['tinc_mode_'      ~ tinc_network] | d(tinc_mode     , true) }}"
+tinc_cur_dns      : "{{ vars['tinc_dns_'       ~ tinc_network] | d(tinc_dns      , true) }}"
+tinc_cur_nodes    : "{{ vars['tinc_nodes_'     ~ tinc_network] | d(tinc_nodes    , true) }}" 
+tinc_cur_servers  : "{{ vars['tinc_servers_'   ~ tinc_network] | d(tinc_servers  , true) }}"
+
+# Host-specific config
+tinc_cur_port     : "{{ vars['tinc_port_'      ~ tinc_network] | d(tinc_port     , true) }}"
+tinc_cur_ip       : "{{ vars['tinc_ip_'        ~ tinc_network] | d(tinc_ip       , true) }}"
+tinc_cur_name     : "{{ vars['tinc_name_'      ~ tinc_network] | d(tinc_name     , true) }}"
+tinc_cur_addresses: "{{ vars['tinc_addresses_' ~ tinc_network] | d(tinc_addresses, true) }}"
+tinc_cur_subnets  : "{{ vars['tinc_subnets_'   ~ tinc_network] | d(tinc_subnets  , true) }}"
+
+tinc_keydir: "{{ tinc_keystore ~ '/' ~ inventory_hostname }}"
+
 # https://bugs.freedesktop.org/show_bug.cgi?id=84373
 systemd_broken_dhcp: "{{ ansible_kernel | version_compare('3.7', '<') }}"
-tinc_has_ip: "{{ tinc_ip | search(tinc_subnet) }}"
-tinc_use_dhcpcd: "{{ systemd_broken_dhcp and not tinc_has_ip }}"
-
-# Network-specific overrides
-tinc__domain: "{{ vars['tinc_domain_' ~ tinc_network] | d(tinc_domain, true) }}"
-tinc__subnet: "{{ vars['tinc_subnet_' ~ tinc_network] | d(tinc_subnet, true) }}"
-tinc__mode: "{{ vars['tinc_mode_' ~ tinc_network] | d(tinc_mode, true) }}"
-tinc__dns: "{{ vars['tinc_dns_' ~ tinc_network] | d(tinc_dns, true) }}"
-
-tinc__node_group: "{{ vars['tinc_node_group_' ~ tinc_network] | d(tinc_node_group, true) }}" 
-tinc__server_group: "{{ vars['tinc_server_group_' ~ tinc_network] | d(tinc_server_group, true) }}"
-
-tinc__port: "{{ vars['tinc_port_' ~ tinc_network] | d(tinc_port, true) }}"
-tinc__ip: "{{ vars['tinc_ip_' ~ tinc_network] | d(tinc_ip, true) }}"
-tinc__name: "{{ vars['tinc_name_' ~ tinc_network] | d(tinc_name, true) }}"
-tinc__addresses: "{{ vars['tinc_addresses_' ~ tinc_network] | d(tinc_addresses, true) }}"
-tinc__subnets: "{{ vars['tinc_subnets_' ~ tinc_network] | d(tinc_subnets, true) }}"
+tinc_use_dhcpcd: "{{ systemd_broken_dhcp and not tinc_cur_ip }}"

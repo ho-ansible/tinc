@@ -18,7 +18,7 @@
   vars:
     item: "{{ inventory_hostname }}"
     ansible_port: "{{ hostvars[target]['ansible_port'] }}"
-  with_inventory_hostnames: "{{ tinc__server_group }}"
+  with_inventory_hostnames: "{{ tinc_cur_servers }}"
   loop_control:
     loop_var: target
 
