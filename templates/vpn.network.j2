@@ -9,7 +9,7 @@ Name={{ tinc_prefix ~ tinc_network }}
 Description="tinc VPN {{ tinc_network }}"
 LinkLocalAddressing=no
 IPv6AcceptRA=no
-LLMNR=false
+LLMNR=no
 
 {% if tinc_cur_ip %}
 Address={{ tinc_cur_ip }}/24
