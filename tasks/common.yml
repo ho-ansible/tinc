@@ -108,11 +108,14 @@
   tags:
     - iptables
   iptables:
-    ip_version: "{{ item }}"
+    ip_version: "{{ item[0] }}"
     chain: INPUT
+    protocol: "{{ item[1] }}"
     destination_port: "{{ tinc_cur_port }}"
     jump: ACCEPT
-  with_items: [ ipv4, ipv6 ]
+  with_nested:
+    - [ ipv4, ipv6 ]
+    - [ tcp, udp ]
   notify: iptables
 
 - name: tinc VPN | iptables interface
