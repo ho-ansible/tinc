@@ -11,23 +11,23 @@ LinkLocalAddressing=no
 IPv6AcceptRA=no
 LLMNR=no
 
-{% if tinc_cur_ip %}
+{%- if tinc_cur_ip %}
 Address={{ tinc_cur_ip }}/24
-{% endif %}
+{% endif -%}
 
 Domains=~.
 
-{% if 'gw' in group_names %}
+{%- if 'gw' in group_names %}
 IPMasquerade=yes
-{% endif %}
+{% endif -%}
 
-{% if systemd_broken_dhcp or tinc_cur_ip %}
+{%- if systemd_broken_dhcp or tinc_cur_ip %}
 DHCP=no
 Domains={{ tinc_cur_domain }}
 
-{%   if tinc_cur_dns %}
+  {%- if tinc_cur_dns %}
 DNS={{ tinc_cur_dns }}
-{%   endif %}
+  {%- endif %}
 {% else %}
 DHCP=yes
 
