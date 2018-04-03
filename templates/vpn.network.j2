@@ -15,11 +15,11 @@ LLMNR=false
 Address={{ tinc_cur_ip }}/24
 {% endif %}
 
-{% if tinc_cur_servers in group_names %}
 Domains={{ tinc_cur_domain }}
-IPForward=yes
-{% else %}
 Domains=~.
+
+{% if 'gw' in group_names %}
+IPForward=yes
 {% endif %}
 
 {% if systemd_broken_dhcp or tinc_cur_ip %}
