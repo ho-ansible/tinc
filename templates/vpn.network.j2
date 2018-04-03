@@ -19,7 +19,7 @@ Domains={{ tinc_cur_domain }}
 Domains=~.
 
 {% if 'gw' in group_names %}
-IPForward=yes
+IPMasquerade=yes
 {% endif %}
 
 {% if systemd_broken_dhcp or tinc_cur_ip %}
