@@ -3,16 +3,16 @@
 # {{ ansible_managed }}
 # Configuration for tinc mesh VPN
 
-Port = {{ tinc_cur_port }}
+Port = {{ tinc__port }}
 
-Name = {{ tinc_cur_name | d(inventory_hostname, true) }}
+Name = {{ tinc__name | d(inventory_hostname, true) }}
 
-{% for host in groups[tinc_cur_servers] if host != inventory_hostname %}
+{% for host in groups[tinc__servers] if host != inventory_hostname %}
 ConnectTo = {{ hostvars[host]['tinc_name_' ~ tinc_network] | d(hostvars[host].tinc_name, true) | d(host, true) }}
 {% endfor %}
 AutoConnect = yes
 
-Mode = {{ tinc_cur_mode }}
+Mode = {{ tinc__mode }}
 
 {% if 'win' not in group_names %}
 {%   if 'android' in group_names %}

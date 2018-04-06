@@ -12,8 +12,8 @@
 - import_tasks: common.yml
 
 - include_tasks: hostconf.yml
-  with_inventory_hostnames: "{{ tinc_cur_nodes }}:!{{ tinc_cur_servers }}"
-  when: "tinc_cur_servers in group_names"
+  with_inventory_hostnames: "{{ tinc__nodes }}:!{{ tinc__servers }}"
+  when: "tinc__servers in group_names"
 
 - include_tasks: gateway.yml
   when: "'gw' in group_names"

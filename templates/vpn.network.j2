@@ -11,8 +11,8 @@ LinkLocalAddressing=no
 IPv6AcceptRA=no
 LLMNR=no
 
-{%- if tinc_cur_ip %}
-Address={{ tinc_cur_ip }}/24
+{%- if tinc__ip %}
+Address={{ tinc__ip }}/24
 {% endif -%}
 
 Domains=~.
@@ -21,12 +21,12 @@ Domains=~.
 IPMasquerade=yes
 {% endif -%}
 
-{%- if systemd_broken_dhcp or tinc_cur_ip %}
+{%- if systemd_broken_dhcp or tinc__ip %}
 DHCP=no
-Domains={{ tinc_cur_domain }}
+Domains={{ tinc__domain }}
 
-  {%- if tinc_cur_dns %}
-DNS={{ tinc_cur_dns }}
+  {%- if tinc__dns %}
+DNS={{ tinc__dns }}
   {%- endif %}
 {% else %}
 DHCP=yes
