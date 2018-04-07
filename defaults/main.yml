@@ -8,7 +8,7 @@ tinc_network: vpn
 tinc_subnet: 192.168.2          # required
 tinc_domain: "{{ tinc_network }}.vpn"
 tinc_mode: switch
-tinc_dns: 
+tinc_dns: []
 tinc_nodes: tinc 
 tinc_servers: tinc_server
 

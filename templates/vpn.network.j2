@@ -25,9 +25,9 @@ IPMasquerade=yes
 DHCP=no
 Domains={{ tinc__domain }}
 
-  {%- if tinc__dns %}
-DNS={{ tinc__dns }}
-  {%- endif %}
+  {%- for dns in tinc__dns %}
+DNS={{ dns }}
+  {%- endfor %}
 {% else %}
 DHCP=yes
 
