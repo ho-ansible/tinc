@@ -15,19 +15,22 @@ LLMNR=no
 Address={{ tinc__ip }}/24
 {% endif %}
 
-Domains=~.
-
 {% if 'gw' in group_names %}
 IPMasquerade=yes
+{% endif %}
+
+Domains=~.
+
+{% if tinc__ip %}
+{%   for dns in tinc__dns %}
+DNS={{ dns }}
+{%   endfor %}
 {% endif %}
 
 {% if systemd_broken_dhcp or tinc__ip %}
 DHCP=no
 Domains={{ tinc__domain }}
 
-{%   for dns in tinc__dns %}
-DNS={{ dns }}
-{%   endfor %}
 {% else %}
 DHCP=yes
 
