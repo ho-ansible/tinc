@@ -1,9 +1,9 @@
-## /etc/systemd/network/20-{{ tinc_prefix ~ tinc_network }}.network
+## /etc/systemd/network/20-{{ tinc_network }}.network
 # per-link config of systemd-network, also see {{ tinc_dir }}/tinc-up
 # {{ ansible_managed }}
 
 [Match]
-Name={{ tinc_prefix ~ tinc_network }}
+Name={{ tinc_network }}
 
 [Network]
 Description="tinc VPN {{ tinc_network }}"

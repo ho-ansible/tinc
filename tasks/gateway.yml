@@ -6,7 +6,7 @@
   iptables:
     ip_version: "{{ item }}"
     chain: FORWARD
-    in_interface: "{{ tinc_prefix ~ tinc_network }}"
+    in_interface: "{{ tinc_network }}"
     jump: ACCEPT
   with_items: [ ipv4, ipv6 ]
   notify: iptables
@@ -17,7 +17,7 @@
   iptables:
     ip_version: "{{ item }}"
     chain: FORWARD
-    out_interface: "{{ tinc_prefix ~ tinc_network }}"
+    out_interface: "{{ tinc_network }}"
     jump: ACCEPT
   with_items: [ ipv4, ipv6 ]
   notify: iptables
@@ -27,7 +27,7 @@
     - iptables
   iptables:
     chain: POSTROUTING
-    out_interface: "{{ tinc_prefix ~ tinc_network }}"
+    out_interface: "{{ tinc_network }}"
     to_source: "{{ ansible_default_ipv4.address }}"
     jump: SNAT
   notify: iptables
@@ -37,7 +37,7 @@
     - iptables
   iptables:
     chain: POSTROUTING
-    out_interface: "{{ tinc_prefix ~ tinc_network }}"
+    out_interface: "{{ tinc_network }}"
     jump: MASQUERADE
   notify: iptables
 

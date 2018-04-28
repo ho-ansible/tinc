@@ -81,7 +81,7 @@
   - config
   template:
     src: vpn.network.j2
-    dest: "/etc/systemd/network/20-{{ tinc_prefix }}{{ tinc_network }}.network"
+    dest: "/etc/systemd/network/20-{{ tinc_network }}.network"
   notify:
     - restart networkd
     - restart tinc
@@ -124,7 +124,7 @@
   iptables:
     ip_version: "{{ item }}"
     chain: INPUT
-    in_interface: "{{ tinc_prefix ~ tinc_network }}"
+    in_interface: "{{ tinc_network }}"
     jump: ACCEPT
   with_items: [ ipv4, ipv6 ]
   notify: iptables
@@ -147,4 +147,4 @@
     enabled: yes
   with_items:
   - tinc
-  - "tinc@{{ tinc_prefix }}{{ tinc_network }}"
+  - "tinc@{{ tinc_network }}"
