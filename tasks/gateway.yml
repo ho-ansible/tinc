@@ -26,6 +26,7 @@
   tags:
     - iptables
   iptables:
+    table: nat
     chain: POSTROUTING
     out_interface: "{{ tinc_network }}"
     to_source: "{{ ansible_default_ipv4.address }}"
@@ -36,6 +37,7 @@
   tags:
     - iptables
   iptables:
+    table: nat
     chain: POSTROUTING
     out_interface: "{{ tinc_network }}"
     jump: MASQUERADE
