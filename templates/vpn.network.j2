@@ -5,6 +5,11 @@
 [Match]
 Name={{ tinc_network }}
 
+{% if systemd_broken_dhcp and not tinc__ip %}
+[Link]
+Unmanaged=yes
+{% endif %}
+
 [Network]
 Description="tinc VPN {{ tinc_network }}"
 LinkLocalAddressing=no
@@ -13,6 +18,9 @@ LLMNR=no
 
 {% if tinc__ip %}
 Address={{ tinc__ip }}/24
+{%   for dns in tinc__dns %}
+DNS={{ dns }}
+{%   endfor %}
 {% endif %}
 
 {% if 'gw' in group_names %}
@@ -21,20 +29,10 @@ IPMasquerade=yes
 
 Domains=~.
 
-{% if tinc__ip %}
-{%   for dns in tinc__dns %}
-DNS={{ dns }}
-{%   endfor %}
-{% endif %}
-
-{% if systemd_broken_dhcp or tinc__ip %}
-DHCP=no
-Domains={{ tinc__domain }}
-
-{% else %}
+{% if not systemd_broken_dhcp and not tinc__ip %}
 DHCP=yes
 
 [DHCP]
-UseDomains=true
-UseHostname=false
+UseDomains=yes
+UseHostname=no
 {% endif %}
