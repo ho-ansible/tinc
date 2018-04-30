@@ -29,14 +29,10 @@ IPMasquerade=yes
 
 Domains=~.
 
-{% if systemd_broken_dhcp or tinc__ip %}
-DHCP=no
-Domains={{ tinc__domain }}
-
-{% else %}
+{% if not systemd_broken_dhcp and not tinc__ip %}
 DHCP=yes
 
 [DHCP]
-UseDomains=true
-UseHostname=false
+UseDomains=yes
+UseHostname=no
 {% endif %}
