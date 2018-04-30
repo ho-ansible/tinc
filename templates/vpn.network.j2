@@ -5,6 +5,11 @@
 [Match]
 Name={{ tinc_network }}
 
+{% if systemd_broken_dhcp and not tinc__ip %}
+[Link]
+Unmanaged=yes
+{% endif %}
+
 [Network]
 Description="tinc VPN {{ tinc_network }}"
 LinkLocalAddressing=no
