@@ -28,7 +28,7 @@
   iptables:
     table: nat
     chain: POSTROUTING
-    out_interface: "{{ tinc_network }}"
+    out_interface: "{{ ansible_default_ipv4.interface }}"
     to_source: "{{ ansible_default_ipv4.address }}"
     jump: SNAT
   notify: iptables
