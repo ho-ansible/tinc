@@ -19,11 +19,9 @@
   tags:
   - package
   package:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-  - openssl
-  - liblzo2-2
+    name: 
+      - openssl
+      - liblzo2-2
   notify: restart tinc
 
 - name: tinc VPN | binaries
