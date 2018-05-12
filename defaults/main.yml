@@ -5,7 +5,7 @@ tinc_network: vpn
 # e.g., tinc_dns_MYNET overrides tinc_dns for the MYNET tinc network
 
 # per network:
-tinc_subnet: 192.168.2          # required
+tinc_subnet: 192.168.2/24          # required
 tinc_domain: "{{ tinc_network }}.vpn"
 tinc_mode: switch
 tinc_dns: []
