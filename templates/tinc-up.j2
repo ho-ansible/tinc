@@ -39,8 +39,9 @@ initRouting() {
 initRouting
 
 getroute() {
-  rt=$(ip ro get $1 | head -n 1)
-  echo "${rt#$1}"
+  ip ro get $1 | \
+    head -n 1 | \
+    egrep -ow 'via [0-9a-f.:]+'
 }
 
 saveroute() {
