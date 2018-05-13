@@ -1,3 +1,4 @@
 ---
 dependencies:
-  - role: iptables
+  - role: iptables tinc_network=""
+  - role: systemd-networkd tinc_network=""
