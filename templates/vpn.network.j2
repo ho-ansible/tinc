@@ -17,7 +17,7 @@ IPv6AcceptRA=no
 LLMNR=no
 
 {% if tinc__ip %}
-Address={{ tinc__ip }}/24
+Address={{ tinc__ip }}
 {%   for dns in tinc__dns %}
 DNS={{ dns }}
 {%   endfor %}
