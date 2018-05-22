@@ -1,5 +1,6 @@
 ---
 
+# identifies instance of tinc and tun interface name
 tinc_network: vpn
 
 # e.g., tinc_dns_MYNET overrides tinc_dns for the MYNET tinc network
