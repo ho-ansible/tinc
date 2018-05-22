@@ -8,6 +8,8 @@ Ansible role to configure tinc VPN
 
 ## Role variables
 ### Network config
++ `tinc_network`: name of tinc instance and tun interface.
+  Tinc only allows the characters `[a-zA-Z0-9_]+` (no hyphens).
 + `tinc_subnet` (e.g., `192.168.2`): the first 3 quads of a /24 (for now)
   + This is mandatory
 + `tinc_mode`: `switch` or `router`
