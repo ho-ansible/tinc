@@ -7,7 +7,7 @@
   register: keydir
 
 - include_tasks: genkey.yml
-  when: "not keydir.stat.exists"
+  when: not keydir.stat.exists
 
 - import_tasks: common.yml
 
@@ -15,7 +15,7 @@
   block:
   - include_tasks: hostconf.yml
     with_inventory_hostnames: "{{ tinc__nodes ~ '!' ~ tinc__servers }}"
-  when: "tinc__servers in group_names"
+  when: tinc__servers in group_names
 
 - include_tasks: gateway.yml
-  when: "'gw' in group_names"
+  when: 'gw' in group_names
