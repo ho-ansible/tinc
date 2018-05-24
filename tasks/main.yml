@@ -18,4 +18,4 @@
   when: tinc__servers in group_names
 
 - include_tasks: gateway.yml
-  when: 'gw' in group_names
+  when: "'gw' in group_names"
