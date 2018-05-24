@@ -8,7 +8,7 @@
     chain: FORWARD
     in_interface: "{{ tinc_network }}"
     jump: ACCEPT
-  with_items: [ ipv4, ipv6 ]
+  loop: [ ipv4, ipv6 ]
   notify: iptables
 
 - name: tinc VPN | iptables forward out
@@ -19,7 +19,7 @@
     chain: FORWARD
     out_interface: "{{ tinc_network }}"
     jump: ACCEPT
-  with_items: [ ipv4, ipv6 ]
+  loop: [ ipv4, ipv6 ]
   notify: iptables
 
 - name: tinc VPN | iptables SNAT

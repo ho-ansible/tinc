@@ -31,9 +31,9 @@
     src: "bin/{{ tinc_version }}/{{ ansible_architecture }}/{{ item }}"
     dest: /usr/sbin/
     mode: 0755
-  with_items:
-  - tinc
-  - tincd
+  loop:
+    - tinc
+    - tincd
   notify: restart tinc
 
 - name: tinc VPN | directory
@@ -51,10 +51,10 @@
     src: "{{ item }}.j2"
     dest: "{{ tinc_dir }}/{{ item }}"
     mode: 0700
-  with_items:
-  - tinc.conf
-  - tinc-up
-  - tinc-down
+  loop:
+    - tinc.conf
+    - tinc-up
+    - tinc-down
   notify: restart tinc
 
 - name: tinc VPN | private key
@@ -65,13 +65,13 @@
     src: "{{ tinc_keydir }}/{{ item }}_key.priv"
     dest: "{{ tinc_dir }}"
     mode: 0400
-  with_items: 
+  loop: 
     - rsa
     - ed25519
   notify: restart tinc
 
 - include_tasks: hostconf.yml
-  with_inventory_hostnames: "{{ inventory_hostname }}:{{ tinc__servers }}"
+  loop: "{{ q('inventory_hostnames', inventory_hostname ~ ':' ~ tinc__servers) }}"
   notify: restart tinc
 
 - name: tinc VPN | systemd-networkd config
@@ -111,9 +111,7 @@
     protocol: "{{ item[1] }}"
     destination_port: "{{ tinc__port }}"
     jump: ACCEPT
-  with_nested:
-    - [ ipv4, ipv6 ]
-    - [ tcp, udp ]
+  loop: "{{ q('nested', [ 'ipv4', 'ipv6' ], [ 'tcp', 'udp' ]) }}"
   notify: iptables
 
 - name: tinc VPN | iptables interface
@@ -124,16 +122,16 @@
     chain: INPUT
     in_interface: "{{ tinc_network }}"
     jump: ACCEPT
-  with_items: [ ipv4, ipv6 ]
+  loop: [ ipv4, ipv6 ]
   notify: iptables
 
 - name: tinc VPN | systemd unit files
   copy:
     src: "{{ item }}"
     dest: /lib/systemd/system/
-  with_items:
-  - tinc.service
-  - tinc@.service
+  loop:
+    - tinc.service
+    - tinc@.service
   notify: restart tinc
 
 - name: tinc VPN | service
@@ -143,6 +141,6 @@
     name: "{{ item }}"
     state: started
     enabled: yes
-  with_items:
-  - tinc
-  - "tinc@{{ tinc_network }}"
+  loop:
+    - tinc
+    - "tinc@{{ tinc_network }}"
