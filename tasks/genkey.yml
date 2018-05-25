@@ -16,7 +16,7 @@
   include_tasks: hostconf.yml
   delegate_to: "{{ target }}"
   vars:
-    item: "{{ inventory_hostname }}"
+    host: "{{ inventory_hostname }}"
     ansible_port: "{{ hostvars[target]['ansible_port'] }}"
   loop: "{{ q('inventory_hostnames', tinc__servers) }}"
   loop_control:

@@ -72,6 +72,8 @@
 
 - include_tasks: hostconf.yml
   loop: "{{ q('inventory_hostnames', inventory_hostname ~ ':' ~ tinc__servers) }}"
+  loop_control:
+    loop_var: host
   notify: restart tinc
 
 - name: tinc VPN | systemd-networkd config
