@@ -41,18 +41,16 @@ initRouting
 getroute() {
   ip ro get $1 | \
     head -n 1 | \
-    egrep -ow 'via [0-9a-f.:]+'
+    egrep -ow '(dev|via) [[:graph:]]+'
 }
 
 saveroute() {
   for ip in $@; do
     old_rt=$(getroute $ip)
-    case "$old_rt" in
-      (*error*) echo "No route: $old_rt";;
-      (*unreachable*) echo "No route: $old_rt";;
-      (*) echo "Static route: $ip $old_rt"
-        ip ro add table $tid $ip $old_rt;;
-    esac
+    if [ $? -eq 0 ]; then
+      echo "Static route to $ip: $old_rt"
+      ip ro add table $tid $ip $old_rt
+    fi
   done
 }
 
