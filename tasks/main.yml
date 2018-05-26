@@ -11,6 +11,9 @@
 
 - import_tasks: common.yml
 
+- include_tasks: dhcpcd.yml
+  when: tinc_use_dhcpcd
+
 - name: tinc VPN | client pubkeys
   block:
   - include_tasks: hostconf.yml
