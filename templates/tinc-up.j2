@@ -48,7 +48,7 @@ saveroute() {
   for ip in $@; do
     old_rt=$(getroute $ip)
     if [ $? -eq 0 ]; then
-      echo "Static route to $ip: $old_rt"
+      echo "Saving route to $ip ($old_rt)"
       ip ro add table $tid $ip $old_rt
     fi
   done
