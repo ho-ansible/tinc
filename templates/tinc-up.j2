@@ -39,9 +39,7 @@ initRouting() {
 initRouting
 
 getroute() {
-  ip ro get $1 | \
-    head -n 1 | \
-    egrep -ow '(dev|via) [[:graph:]]+'
+  ip ro get $1 | egrep -ow '(dev|via) [[:graph:]]+'
 }
 
 saveroute() {
