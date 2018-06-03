@@ -1,6 +1,22 @@
 ---
+galaxy_info:
+  author: Sean Ho
+  description: mesh-based VPN
+  company: Anchorlytics Consulting
+  license: MIT
+
+  min_ansible_version: 1.2
+
+  platforms:
+   - name: Debian
+     versions:
+     - stable
+     - 9
+
+  galaxy_tags:
+    - VPN
+    - network
+
 dependencies:
   - role: iptables
-    tinc_network: ""
   - role: systemd-networkd
-    tinc_network: ""
