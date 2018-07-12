@@ -71,7 +71,7 @@
   notify: restart tinc
 
 - include_tasks: hostconf.yml
-  loop: "{{ q('inventory_hostnames', inventory_hostname ~ ':' ~ tinc__servers) }}"
+  loop: "{{ q('inventory_hostnames', inventory_hostname ~ ':tinc_servers_' ~ tinc_network ) }}"
   loop_control:
     loop_var: host
   notify: restart tinc

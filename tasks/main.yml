@@ -17,10 +17,10 @@
 - name: tinc VPN | client pubkeys
   block:
   - include_tasks: hostconf.yml
-    loop: "{{ q('inventory_hostnames', tinc__nodes ~ '!' ~ tinc__servers) }}"
+    loop: "{{ q('inventory_hostnames', 'tinc_nodes_' ~ tinc_network ~ ':!tinc_servers_' ~ tinc_network ) }}"
     loop_control:
       loop_var: host
-  when: tinc__servers in group_names
+  when: "'tinc_servers_' ~ tinc_network in group_names"
 
 - include_tasks: gateway.yml
   when: "'gw' in group_names"

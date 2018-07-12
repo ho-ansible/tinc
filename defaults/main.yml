@@ -10,8 +10,6 @@ tinc_subnet: 192.168.2/24          # required
 tinc_domain: "{{ tinc_network }}.vpn"
 tinc_mode: switch
 tinc_dns: []
-tinc_nodes: tinc 
-tinc_servers: tinc_server
 
 # per host + per network:
 tinc_port: 655

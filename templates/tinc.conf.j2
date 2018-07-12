@@ -6,7 +6,7 @@ Port = {{ tinc__port }}
 
 Name = {{ tinc__name | d(inventory_hostname, true) }}
 
-{% for host in groups[tinc__servers] if host != inventory_hostname %}
+{% for host in groups['tinc_servers_' ~ tinc_network] if host != inventory_hostname %}
 ConnectTo = {{ hostvars[host]['tinc_name_' ~ tinc_network] | d(hostvars[host].tinc_name, true) | d(host, true) }}
 {% endfor %}
 AutoConnect = yes

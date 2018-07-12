@@ -6,8 +6,6 @@ tinc__subnet   : "{{ vars['tinc_subnet_'    ~ tinc_network] | d(tinc_subnet   , 
 tinc__domain   : "{{ vars['tinc_domain_'    ~ tinc_network] | d(tinc_domain   , true) }}"
 tinc__mode     : "{{ vars['tinc_mode_'      ~ tinc_network] | d(tinc_mode     , true) }}"
 tinc__dns      : "{{ vars['tinc_dns_'       ~ tinc_network] | d(tinc_dns      , true) }}"
-tinc__nodes    : "{{ vars['tinc_nodes_'     ~ tinc_network] | d(tinc_nodes    , true) }}" 
-tinc__servers  : "{{ vars['tinc_servers_'   ~ tinc_network] | d(tinc_servers  , true) }}"
 
 # Host-specific config
 tinc__port     : "{{ vars['tinc_port_'      ~ tinc_network] | d(tinc_port     , true) }}"

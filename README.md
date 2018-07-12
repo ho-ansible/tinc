@@ -25,5 +25,9 @@ Ansible role to configure tinc VPN
 + `tinc_addresses` (e.g., `[10.0.0.1]`): list of Address lines for other nodes to connect
 + `tinc_subnets` (e.g., `[192.168.2.0/24]`): list of Subnet lines for routing
 
+### Inventory Groups
++ `tinc_nodes_`*<network>*: all nodes in the given network
++ `tinc_servers_`*<network>*: just the servers (hosts to Connect to)
+
 ### Misc
 + `tinc_keystore`: dir to store RSA/ED25519 keys
