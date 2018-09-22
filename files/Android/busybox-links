@@ -2,7 +2,7 @@
 ## /data/local/busybox-links
 ## create softlinks for all busybox modules
 
-bb=/data/magisk/busybox
+bb=/data/adb/magisk/busybox
 target=/sbin
 
 [ -x "$bb" ] || {
