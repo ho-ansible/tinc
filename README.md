@@ -31,3 +31,6 @@ Ansible role to configure tinc VPN
 
 ### Misc
 + `tinc_keystore`: dir to store RSA/ED25519 keys
+
+# Author
+Ansible role by Sean Ho
