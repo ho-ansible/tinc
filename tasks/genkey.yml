@@ -1,6 +1,13 @@
 ---
 # Create tinc host key 
 
+- name: tinc genkey | host directory
+  tags:
+    - dir
+  file:
+    dest: "{{ tinc_dir }}/hosts"
+    state: directory
+
 - name: tinc genkey | host dir in keystore
   become: false
   local_action: 
