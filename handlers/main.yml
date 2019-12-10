@@ -5,11 +5,3 @@
   service:
     name: tinc
     state: restarted
-    
-- name: daemon-reload tinc
-  tags:
-    - systemd
-  systemd:
-    name: tinc
-    state: restarted
-    daemon-reload: yes
