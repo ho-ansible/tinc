@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+# Firewall rules for tinc service
+{% set ipt = '/usr/sbin/iptables' %}
+{% set ch = 'in_tinc' %}
+{% set in_rule = '-j ' ~ ch %}
+{% set in_rule = '-p tcp --dport ' ~ tinc__port ~ ' -j ' ~ ch %}
+
+[Service]
+# Setup ref to chain
+ExecStartPre=!-{{ ipt }} -N {{ ch }}
+ExecStartPre=!{{ ipt }} -F {{ ch }}
+ExecStartPre=!-{{ ipt }} -D INPUT {{ in_rule }}
+ExecStartPre=!{{ ipt }} -A INPUT {{ in_rule }}
+
+ExecStartPre=!{{ ipt }} -A {{ ch }} -p tcp --dport {{ tinc__port }} -j ACCEPT
+ExecStartPre=!{{ ipt }} -A {{ ch }} -p udp --dport {{ tinc__port }} -j ACCEPT
+ExecStartPre=!{{ ipt }} -A {{ ch }} -i {{ tinc_network }} -j ACCEPT
+
+# Cleanup: unref, flush, delete
+ExecStopPost=!-{{ ipt }} -D INPUT {{ in_rule }}
+ExecStopPost=!-{{ ipt }} -F {{ ch }}
+ExecStopPost=!-{{ ipt }} -X {{ ch }}
