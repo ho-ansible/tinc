@@ -27,8 +27,6 @@ DNS={{ dns }}
 IPMasquerade=yes
 {% endif %}
 
-Domains=~.
-
 {% if not systemd_broken_dhcp and not tinc__ip %}
 DHCP=yes
 

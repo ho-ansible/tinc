@@ -75,39 +75,26 @@
   loop_control:
     loop_var: host
 
+- name: tinc VPN | systemd-networkd drop-in dir
+  file:
+    path: "{{ tinc_dropin }}"
+    state: directory
+
 - name: tinc VPN | systemd-networkd config
   tags:
   - config
   template:
-    src: vpn.network.j2
-    dest: "/etc/systemd/network/20-{{ tinc_network }}.network"
+    src: "{{ item.src }}.j2"
+    dest: "{{ item.dst }}"
+  loop:
+    - src: vpn.network
+      dst: "/etc/systemd/network/20-{{ tinc_network }}.network"
+    - src: iptables.conf
+      dst: "{{ tinc_dropin }}/iptables.conf"
   notify:
     - daemon-reload
     - restart networkd
     - restart tinc
-
-- name: tinc VPN | iptables port
-  tags:
-    - iptables
-  iptables:
-    ip_version: "{{ item[0] }}"
-    chain: INPUT
-    protocol: "{{ item[1] }}"
-    destination_port: "{{ tinc__port }}"
-    jump: ACCEPT
-  loop: "{{ q('nested', [ 'ipv4', 'ipv6' ], [ 'tcp', 'udp' ]) }}"
-  notify: iptables
-
-- name: tinc VPN | iptables interface
-  tags:
-    - iptables
-  iptables:
-    ip_version: "{{ item }}"
-    chain: INPUT
-    in_interface: "{{ tinc_network }}"
-    jump: ACCEPT
-  loop: [ ipv4, ipv6 ]
-  notify: iptables
 
 - name: tinc VPN | systemd unit files
   copy:
