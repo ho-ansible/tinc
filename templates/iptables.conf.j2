@@ -3,7 +3,6 @@
 {% set ipt = '/usr/sbin/iptables' %}
 {% set ch = 'in_tinc' %}
 {% set in_rule = '-j ' ~ ch %}
-{% set in_rule = '-p tcp --dport ' ~ tinc__port ~ ' -j ' ~ ch %}
 
 [Service]
 # Setup ref to chain
