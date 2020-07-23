@@ -77,7 +77,7 @@
 
 - name: tinc VPN | systemd-networkd drop-in dir
   file:
-    path: "{{ tinc_dropin }}"
+    path: "{{ tinc_dropin | dirname }}"
     state: directory
 
 - name: tinc VPN | systemd-networkd config
@@ -90,7 +90,7 @@
     - src: vpn.network
       dst: "/etc/systemd/network/20-{{ tinc_network }}.network"
     - src: iptables.conf
-      dst: "{{ tinc_dropin }}/iptables.conf"
+      dst: "{{ tinc_dropin }}"
   notify:
     - daemon-reload
     - restart networkd
