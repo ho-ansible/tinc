@@ -1,6 +1,10 @@
 # ho-ansible/tinc
 Ansible role to configure tinc VPN
 
+## DEPRECATED
+I've switched to [Wireguard](https://github.com/ho-ansible/wireguard),
+so this ansible role is no longer maintained.
+
 ## Multiple networks
 + Include this role multiple times
 + See [sample playbook](https://github.com/ho-ansible/ansible/blob/master/plays/tinc.yml)
