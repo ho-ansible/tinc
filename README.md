@@ -1,16 +1,17 @@
-# ho-ansible/tinc
-Ansible role to configure tinc VPN
+# Ansible role: tinc
+Ansible role to configure tinc mesh VPN
 
 ## DEPRECATED
 I've switched to [Wireguard](https://github.com/ho-ansible/wireguard),
 so this ansible role is no longer maintained.
 
-## Multiple networks
-+ Include this role multiple times
-+ See [sample playbook](https://github.com/ho-ansible/ansible/blob/master/plays/tinc.yml)
+## Requirements
+Only tested on Debian stable, for now.
 
 ## Role variables
 Network names may only have the characters `[a-zA-Z0-9_]+` (no hyphens).
+Hosts may belong to multiple tinc networks; the default playbook applies
+the role once for each network.
 
 ### Network config
 + `tinc_subnet_`*<network>* (e.g., `192.168.2`): the first 3 quads of a /24 (for now)
@@ -33,5 +34,17 @@ Network names may only have the characters `[a-zA-Z0-9_]+` (no hyphens).
 ### Misc
 + `tinc_keystore`: dir to store RSA/ED25519 keys
 
-# Author
-Ansible role by Sean Ho
+## Playbooks
++ `main.yml`: apply tinc role
++ `restart.yml`: restart tinc daemon
++ `uninstall.yml`: remove tinc. Run this before removing tinc config from inventory.
+
+## Dependencies
++ [ho-ansible.iptables](https://github.com/ho-ansible/iptables)
++ [ho-ansible.systemd-networkd](https://github.com/ho-ansible/systemd-networkd)
+
+## License
+Ansible role licensed [MIT](LICENSE).
+
+## Author Information
+Sean Ho, https://github.com/ho-ansible/
