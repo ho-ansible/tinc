@@ -1,0 +1,14 @@
+#! /usr/bin/env ansible-playbook
+# Force restart.
+# Use '-l' to limit play to relevant hosts
+---
+
+- name: restart tinc VPN
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: restart tinc
+      service:
+        name: tinc
+        state: restarted
+

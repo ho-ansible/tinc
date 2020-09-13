@@ -1,0 +1,30 @@
+#! /usr/bin/env ansible-playbook
+# Remove tinc installation.
+# Use '-l' to limit play to relevant hosts
+---
+
+- name: uninstall tinc VPN
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: disable tinc services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: no
+      loop:
+        - tinc
+        - "tinc@{{ tinc_network }}"
+
+    - name: remove tinc files
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /usr/sbin/tinc
+        - /usr/sbin/tincd
+        - "{{ tinc_dir }}"
+        - "{{ tinc_dropin | dirname }}"
+        - "/etc/systemd/network/20-{{ tinc_network }}.network"
+        - "/lib/systemd/system/tinc.service"
+        - "/lib/systemd/system/tinc@.service"

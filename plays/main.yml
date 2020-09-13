@@ -1,0 +1,13 @@
+#! /usr/bin/env ansible-playbook
+# Loop over tinc networks
+# Use '-l' to limit to relevant hosts
+---
+
+- name: tinc
+  hosts: all
+  tasks:
+    - include_role:
+        name: tinc
+      loop: "{{ vars.keys() | select('search', '^tinc_subnet_') | map('regex_replace', '^tinc_subnet_') | list }}"
+      loop_control:
+        loop_var: tinc_network
