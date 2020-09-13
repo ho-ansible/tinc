@@ -5,26 +5,10 @@
 
 - name: uninstall tinc VPN
   hosts: all
-  gather_facts: false
   tasks:
-    - name: disable tinc services
-      service:
-        name: "{{ item }}"
-        state: stopped
-        enabled: no
-      loop:
-        - tinc
-        - "tinc@{{ tinc_network }}"
-
-    - name: remove tinc files
-      file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - /usr/sbin/tinc
-        - /usr/sbin/tincd
-        - "{{ tinc_dir }}"
-        - "{{ tinc_dropin | dirname }}"
-        - "/etc/systemd/network/20-{{ tinc_network }}.network"
-        - "/lib/systemd/system/tinc.service"
-        - "/lib/systemd/system/tinc@.service"
+    - include_role:
+        name: tinc
+        tasks_from: uninstall.yml
+      loop: "{{ vars.keys() | select('search', '^tinc_subnet_') | map('regex_replace', '^tinc_subnet_') | list }}"
+      loop_control:
+        loop_var: tinc_network
