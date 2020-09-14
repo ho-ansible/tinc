@@ -35,9 +35,9 @@ the role once for each network.
 + `tinc_keystore`: dir to store RSA/ED25519 keys
 
 ## Playbooks
-+ `main.yml`: apply tinc role
-+ `restart.yml`: restart tinc daemon
-+ `uninstall.yml`: remove tinc. Run this before removing tinc config from inventory.
++ `main.yml`: apply role
++ `restart.yml`: restart daemon
++ `uninstall.yml`: remove. Run this before removing tinc config from inventory.
 
 ## Dependencies
 + [ho-ansible.iptables](https://github.com/ho-ansible/iptables)
