@@ -75,9 +75,9 @@
   loop_control:
     loop_var: host
 
-- name: tinc VPN | systemd-networkd drop-in dir
+- name: tinc VPN | firewall config dir
   file:
-    path: "{{ tinc_systemd }}.d"
+    path: "{{ tinc_iptables_conf | dirname }}"
     state: directory
 
 - name: tinc VPN | systemd-networkd config
@@ -90,7 +90,7 @@
     - src: vpn.network
       dst: "/etc/systemd/network/20-{{ tinc_network }}.network"
     - src: iptables.conf
-      dst: "{{ tinc_systemd }}.d/iptables.conf"
+      dst: "{{ tinc_iptables_conf }}"
   notify:
     - daemon-reload
     - restart networkd

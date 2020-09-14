@@ -16,7 +16,7 @@
     - /usr/sbin/tinc
     - /usr/sbin/tincd
     - "{{ tinc_dir }}"
-    - "{{ tinc_systemd }}.d"
+    - "{{ tinc_iptables_conf | dirname }}"
     - "/etc/systemd/network/20-{{ tinc_network }}.network"
     - "/lib/systemd/system/tinc.service"
     - "/lib/systemd/system/tinc@.service"
