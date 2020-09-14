@@ -20,4 +20,4 @@ tinc_keydir: "{{ tinc_keystore ~ '/' ~ inventory_hostname }}"
 systemd_broken_dhcp: "{{ ansible_kernel is version_compare('3.7', '<') }}"
 tinc_use_dhcpcd: "{{ systemd_broken_dhcp and not tinc__ip }}"
 
-tinc_dropin: "/etc/systemd/system/tinc@{{ tinc_network }}.service.d"
+tinc_systemd: "/etc/systemd/system/tinc@{{ tinc_network }}.service"
