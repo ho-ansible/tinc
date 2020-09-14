@@ -3,7 +3,7 @@
 
 - name: dhcpcd | package
   tags:
-    - package
+  - package
   apt:
     name: dhcpcd5
     install_recommends: no
@@ -11,7 +11,7 @@
 
 - name: dhcpcd | disable resolvconf hook
   tags:
-    - resolv
+  - resolv
   lineinfile:
     path: /etc/dhcpcd.conf
     line: "nohook resolv.conf"
@@ -19,7 +19,7 @@
 
 - name: dhcpcd | disable service
   tags:
-    - service
+  - service
   service:
     name: dhcpcd
     state: stopped

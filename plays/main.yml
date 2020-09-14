@@ -6,8 +6,8 @@
 - name: tinc
   hosts: all
   tasks:
-    - include_role:
-        name: tinc
-      loop: "{{ vars.keys() | select('search', '^tinc_subnet_') | map('regex_replace', '^tinc_subnet_') | list }}"
-      loop_control:
-        loop_var: tinc_network
+  - include_role:
+      name: tinc
+    loop: "{{ vars.keys() | select('search', '^tinc_subnet_') | map('regex_replace', '^tinc_subnet_') | list }}"
+    loop_control:
+      loop_var: tinc_network

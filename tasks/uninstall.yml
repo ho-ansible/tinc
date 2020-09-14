@@ -5,18 +5,18 @@
     state: stopped
     enabled: no
   loop:
-    - tinc
-    - "tinc@{{ tinc_network }}"
+  - tinc
+  - "tinc@{{ tinc_network }}"
 
 - name: tinc | remove files
   file:
     path: "{{ item }}"
     state: absent
   loop:
-    - /usr/sbin/tinc
-    - /usr/sbin/tincd
-    - "{{ tinc_dir }}"
-    - "{{ tinc_iptables_conf | dirname }}"
-    - "/etc/systemd/network/20-{{ tinc_network }}.network"
-    - "/lib/systemd/system/tinc.service"
-    - "/lib/systemd/system/tinc@.service"
+  - /usr/sbin/tinc
+  - /usr/sbin/tincd
+  - "{{ tinc_dir }}"
+  - "{{ tinc_iptables_conf | dirname }}"
+  - "/etc/systemd/network/20-{{ tinc_network }}.network"
+  - "/lib/systemd/system/tinc.service"
+  - "/lib/systemd/system/tinc@.service"

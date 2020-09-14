@@ -6,9 +6,9 @@
 - name: uninstall tinc VPN
   hosts: tinc
   tasks:
-    - include_role:
-        name: tinc
-        tasks_from: uninstall.yml
-      loop: "{{ vars.keys() | select('search', '^tinc_subnet_') | map('regex_replace', '^tinc_subnet_') | list }}"
-      loop_control:
-        loop_var: tinc_network
+  - include_role:
+      name: tinc
+      tasks_from: uninstall.yml
+    loop: "{{ vars.keys() | select('search', '^tinc_subnet_') | map('regex_replace', '^tinc_subnet_') | list }}"
+    loop_control:
+      loop_var: tinc_network

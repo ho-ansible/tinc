@@ -6,8 +6,8 @@
 
 - name: tinc | host config
   tags:
-    - config
-    - crypt
+  - config
+  - crypt
   template:
     src: host.j2
     dest: "{{ tinc_dir }}/hosts/{{ tinc_name }}"

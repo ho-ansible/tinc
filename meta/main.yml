@@ -8,15 +8,15 @@ galaxy_info:
   min_ansible_version: 1.2
 
   platforms:
-   - name: Debian
-     versions:
-     - stable
-     - 9
+  - name: Debian
+    versions:
+    - stable
+    - 9
 
   galaxy_tags:
-    - VPN
-    - network
+  - VPN
+  - network
 
 dependencies:
-  - role: iptables
-  - role: systemd-networkd
+- role: iptables
+- role: systemd-networkd

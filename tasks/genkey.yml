@@ -3,7 +3,7 @@
 
 - name: tinc genkey | host directory
   tags:
-    - dir
+  - dir
   file:
     dest: "{{ tinc_dir }}/hosts"
     state: directory
@@ -21,12 +21,12 @@
 
 - name: tinc genkey | push host public key to VPN servers
   block:
-    - include_tasks: hostconf.yml
-      vars:
-        host: "{{ inventory_hostname }}"
-        ansible_port: "{{ hostvars[target]['ansible_port'] }}"
-      loop: "{{ q('inventory_hostnames', 'tinc_servers_' ~ tinc_network ) }}"
-      loop_control:
-        loop_var: target
+  - include_tasks: hostconf.yml
+    vars:
+      host: "{{ inventory_hostname }}"
+      ansible_port: "{{ hostvars[target]['ansible_port'] }}"
+    loop: "{{ q('inventory_hostnames', 'tinc_servers_' ~ tinc_network ) }}"
+    loop_control:
+      loop_var: target
   delegate_to: "{{ target }}"
 

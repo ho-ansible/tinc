@@ -7,8 +7,8 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: restart tinc
-      service:
-        name: tinc
-        state: restarted
+  - name: restart tinc
+    service:
+      name: tinc
+      state: restarted
 

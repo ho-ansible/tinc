@@ -20,8 +20,8 @@
   - package
   package:
     name: 
-      - openssl
-      - liblzo2-2
+    - openssl
+    - liblzo2-2
   notify: restart tinc
 
 - name: tinc VPN | binaries
@@ -32,8 +32,8 @@
     dest: /usr/sbin/
     mode: 0755
   loop:
-    - tinc
-    - tincd
+  - tinc
+  - tincd
   notify: restart tinc
 
 - name: tinc VPN | directory
@@ -52,22 +52,22 @@
     dest: "{{ tinc_dir }}/{{ item }}"
     mode: 0700
   loop:
-    - tinc.conf
-    - tinc-up
-    - tinc-down
+  - tinc.conf
+  - tinc-up
+  - tinc-down
   notify: restart tinc
 
 - name: tinc VPN | private key
   tags:
-    - config
-    - crypt
+  - config
+  - crypt
   copy:
     src: "{{ tinc_keydir }}/{{ item }}_key.priv"
     dest: "{{ tinc_dir }}"
     mode: 0400
   loop: 
-    - rsa
-    - ed25519
+  - rsa
+  - ed25519
   notify: restart tinc
 
 - include_tasks: hostconf.yml
@@ -87,22 +87,22 @@
     src: "{{ item.src }}.j2"
     dest: "{{ item.dst }}"
   loop:
-    - src: vpn.network
-      dst: "/etc/systemd/network/20-{{ tinc_network }}.network"
-    - src: iptables.conf
-      dst: "{{ tinc_iptables_conf }}"
+  - src: vpn.network
+    dst: "/etc/systemd/network/20-{{ tinc_network }}.network"
+  - src: iptables.conf
+    dst: "{{ tinc_iptables_conf }}"
   notify:
-    - daemon-reload
-    - restart networkd
-    - restart tinc
+  - daemon-reload
+  - restart networkd
+  - restart tinc
 
 - name: tinc VPN | systemd unit files
   copy:
     src: "{{ item }}"
     dest: /lib/systemd/system/
   loop:
-    - tinc.service
-    - tinc@.service
+  - tinc.service
+  - tinc@.service
   notify: restart tinc
 
 - name: tinc VPN | service
@@ -113,5 +113,5 @@
     state: started
     enabled: yes
   loop:
-    - tinc
-    - "tinc@{{ tinc_network }}"
+  - tinc
+  - "tinc@{{ tinc_network }}"

@@ -2,7 +2,7 @@
 
 - name: tinc VPN | iptables forward in
   tags:
-    - iptables
+  - iptables
   iptables:
     ip_version: "{{ item }}"
     chain: FORWARD
@@ -13,7 +13,7 @@
 
 - name: tinc VPN | iptables forward out
   tags:
-    - iptables
+  - iptables
   iptables:
     ip_version: "{{ item }}"
     chain: FORWARD
@@ -24,7 +24,7 @@
 
 - name: tinc VPN | iptables SNAT
   tags:
-    - iptables
+  - iptables
   iptables:
     table: nat
     chain: POSTROUTING
@@ -35,7 +35,7 @@
 
 - name: tinc VPN | iptables MASQUERADE
   tags:
-    - iptables
+  - iptables
   iptables:
     table: nat
     chain: POSTROUTING
