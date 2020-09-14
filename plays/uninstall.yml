@@ -1,10 +1,10 @@
 #! /usr/bin/env ansible-playbook
-# Remove tinc installation.
-# Use '-l' to limit play to relevant hosts
+# Uninstall tinc VPN.
+# Replace 'tinc' with your own inventory group
 ---
 
 - name: uninstall tinc VPN
-  hosts: all
+  hosts: tinc
   tasks:
     - include_role:
         name: tinc
